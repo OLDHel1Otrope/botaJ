@@ -43,6 +43,7 @@ public class CustomLinkList<T> {
     }
 
     public void add(T data) {
+        //adds at the last
         if (head == null) {
             head = new Node<>(data);
             tail = head;
@@ -50,6 +51,36 @@ public class CustomLinkList<T> {
             Node<T> newNode = new Node<>(data);
             tail.next = newNode;
             tail = newNode;
+        }
+        size++;
+    }
+    public void addLast(T data){
+        add(data);
+    }
+    public void addFirst(T data){
+        if (head == null) {
+            head = new Node<>(data);
+            tail = head;
+        } else {
+            Node<T> newNode = new Node<>(data);
+            newNode.next=head;
+            head = newNode;
+        }
+        size++;
+    }
+    public void addAt(T data, int position){
+        if(position>size+1||position<0) return;
+        if (head == null) {
+            head = new Node<>(data);
+            tail = head;
+        } else {
+            Node<T> newNode = new Node<>(data);
+            Node<T> temp=head;
+            for (int i = 0; i < position-1; i++) {
+                temp=temp.next;
+            }
+            newNode.next=temp.next;
+            temp.next=newNode;
         }
         size++;
     }
@@ -75,11 +106,16 @@ public class CustomLinkList<T> {
         }
         size--;
     }
+    public void removeFirst(){
+        this.remove(0);
+    }
+    public void removeLast(){
+        this.remove(size);
+    }
 
     public void display() {
         System.out.println(this.toString());
     }
-
     public String toString() {
         StringBuilder S = new StringBuilder();
         S.append("[");
@@ -104,5 +140,24 @@ public class CustomLinkList<T> {
             temp = temp.next;
         }
         return false;
+    }
+
+    public void reverse(){//not preserving the actual reference structure
+        Node<T> prev = null;
+        Node<T> curr = head;
+        Node<T> next = null;
+        while(curr !=null){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        tail=head;
+        head=prev;
+    }
+
+    public void sort(){
+        //running insertionSort
+
     }
 }
